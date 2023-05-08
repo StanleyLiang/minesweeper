@@ -1,0 +1,49 @@
+.App {
+  text-align: center;
+  padding: 16px;
+}
+
+:root {
+  --board-size: 400px;
+  --board-color: black;
+  --rows: 9;
+  --cols: 9;
+}
+
+.board {
+  margin: auto;
+  background-color: gainsboro;
+  width: fit-content;
+  user-select: none;
+  font-weight: bold;
+}
+
+.board.failed {
+  pointer-events: none;
+}
+
+.row {
+  width: fit-content;
+  height: calc(var(--board-size) / var(--rows));
+  border-left: var(--board-color) solid 2px;
+  border-bottom: var(--board-color) solid 2px;
+}
+
+.row:first-child {
+  border-top: var(--board-color) solid 2px;
+}
+
+.col {
+  display: inline-block;
+  width: calc(var(--board-size) / var(--cols));
+  height: 100%;
+  border-right: var(--board-color) solid 2px;
+  cursor: pointer;
+  vertical-align: middle;
+  line-height: calc(var(--board-size) / var(--rows));
+}
+
+.col.opened {
+  background-color: white;
+  pointer-events: none;
+}
