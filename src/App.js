@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import classNames from "classnames";
 import Col from "./Col";
 import { initBoard, placeMines, openCol, flagCol } from "./utils";
