@@ -20,6 +20,7 @@
 
 .board.failed {
   pointer-events: none;
+  animation: shake 0.1s ease-in-out 5;
 }
 
 .row {
@@ -46,4 +47,71 @@
 .col.opened {
   background-color: white;
   pointer-events: none;
+}
+
+.col[data-count="1"] {
+  color: #f8b195;
+}
+
+.col[data-count="2"] {
+  color: #f67280;
+}
+
+.col[data-count="3"] {
+  color: #c06c84;
+}
+
+.col[data-count="4"] {
+  color: #6c5b7b;
+}
+
+.col[data-count="5"] {
+  color: #355c7d;
+}
+
+.col[data-count="6"] {
+  color: #99b898;
+}
+
+.col[data-count="7"] {
+  color: #feceab;
+}
+
+.col[data-count="8"] {
+  color: #ff847c;
+}
+
+.col[data-count="9"] {
+  color: #e84a5f;
+}
+
+.message {
+  animation: zoom 1s ease-in-out 3;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
