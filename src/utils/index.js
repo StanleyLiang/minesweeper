@@ -51,16 +51,20 @@ export const placeMines = ({ board, mines, entryCoordinate }) => {
 };
 
 const countMinesAround = ({ board, row, col }) => {
-  let count = 0;
-
-  if (board?.[row - 1]?.[col]?.isMine) count++;
-  if (board?.[row - 1]?.[col - 1]?.isMine) count++;
-  if (board?.[row - 1]?.[col + 1]?.isMine) count++;
-  if (board?.[row]?.[col - 1]?.isMine) count++;
-  if (board?.[row]?.[col + 1]?.isMine) count++;
-  if (board?.[row + 1]?.[col - 1]?.isMine) count++;
-  if (board?.[row + 1]?.[col]?.isMine) count++;
-  if (board?.[row + 1]?.[col + 1]?.isMine) count++;
+  const squaresAround = [
+    [row - 1, col],
+    [row - 1, col - 1],
+    [row - 1, col + 1],
+    [row, col - 1],
+    [row, col + 1],
+    [row + 1, col - 1],
+    [row + 1, col],
+    [row + 1, col + 1],
+  ];
+  const count = squaresAround.reduce((accumulator, [row, col]) => {
+    if (board?.[row]?.[col]?.isMine) accumulator++;
+    return accumulator;
+  }, 0);
 
   return count;
 };
@@ -117,5 +121,36 @@ export const openCol = ({ board, row, col }) => {
 export const flagCol = ({ board, row, col }) => {
   board[row][col].isFlag = !board[row][col].isFlag;
 
+  return board;
+};
+
+export const openSquaresAround = ({ board, row, col }) => {
+  const count = board[row][col].count;
+  const squaresAround = [
+    [row - 1, col],
+    [row - 1, col - 1],
+    [row - 1, col + 1],
+    [row, col - 1],
+    [row, col + 1],
+    [row + 1, col - 1],
+    [row + 1, col],
+    [row + 1, col + 1],
+  ];
+
+  const flags = squaresAround.reduce((accumulator, [row, col]) => {
+    if (board?.[row]?.[col]?.isFlag) accumulator++;
+    return accumulator;
+  }, 0);
+
+  if (count === flags) {
+    squaresAround.forEach(([row, col]) => {
+      const squareObj = board?.[row]?.[col];
+
+      if (!squareObj) return;
+      const count = countMinesAround({ board, row, col });
+      squareObj.isOpen = true;
+      squareObj.count = count;
+    }, 0);
+  }
   return board;
 };

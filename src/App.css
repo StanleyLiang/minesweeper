@@ -46,7 +46,6 @@
 
 .col.opened {
   background-color: white;
-  pointer-events: none;
 }
 
 .col[data-count="1"] {

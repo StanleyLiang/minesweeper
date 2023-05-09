@@ -2,7 +2,13 @@ import { useState } from "react";
 import classNames from "classnames";
 import Col from "./Col";
 import Controller from "./Controller";
-import { initBoard, placeMines, openCol, flagCol } from "./utils";
+import {
+  initBoard,
+  placeMines,
+  openCol,
+  flagCol,
+  openSquaresAround,
+} from "./utils";
 import { GameStatus } from "./constants";
 import "./App.css";
 
@@ -20,7 +26,6 @@ function App() {
     const { boardUpdated, mineBoomed } = openCol({ board, row, col });
 
     if (mineBoomed) {
-      console.log("game over", { row, col });
       setGameStatus(GameStatus.Failed);
     }
 
@@ -45,6 +50,11 @@ function App() {
     setBoard([...boardUpdated]);
   };
 
+  const onOpenSquareAround = ({ row, col }) => {
+    const boardUpdated = openSquaresAround({ board, row, col });
+    setBoard([...boardUpdated]);
+  };
+
   return (
     <div className="App">
       <div className={boardClass}>
@@ -58,6 +68,7 @@ function App() {
                 {...col}
                 onClick={onColClick}
                 onContextMenu={onColFlag}
+                onDoubleClick={onOpenSquareAround}
               />
             ))}
           </div>
