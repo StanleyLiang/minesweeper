@@ -5,8 +5,8 @@ import Controller from "./Controller";
 import {
   initBoard,
   placeMines,
-  openCol,
-  flagCol,
+  openSquare,
+  flagSquare,
   openSquaresAround,
 } from "./utils";
 import { GameStatus } from "./constants";
@@ -22,8 +22,8 @@ function App() {
 
   const boardClass = classNames("board", gameStatus);
 
-  const onOpenCol = ({ row, col }) => {
-    const { boardUpdated, mineBoomed } = openCol({ board, row, col });
+  const onOpenSquare = ({ row, col }) => {
+    const { boardUpdated, mineBoomed } = openSquare({ board, row, col });
 
     if (mineBoomed) {
       setGameStatus(GameStatus.Failed);
@@ -35,7 +35,7 @@ function App() {
   const onStart = (entryCoordinate) => {
     setGameStatus(GameStatus.Started);
 
-    const { boardUpdated } = openCol({
+    const { boardUpdated } = openSquare({
       board: placeMines({ board, mines: MINES, entryCoordinate }),
       ...entryCoordinate,
     });
@@ -43,10 +43,10 @@ function App() {
     setBoard(boardUpdated);
   };
 
-  const onColClick = gameStatus === GameStatus.Started ? onOpenCol : onStart;
+  const onColClick = gameStatus === GameStatus.Started ? onOpenSquare : onStart;
 
   const onColFlag = ({ row, col }) => {
-    const boardUpdated = flagCol({ board, row, col });
+    const boardUpdated = flagSquare({ board, row, col });
     setBoard([...boardUpdated]);
   };
 

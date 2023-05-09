@@ -69,21 +69,21 @@ const countMinesAround = ({ board, row, col }) => {
   return count;
 };
 
-const openAdjacentBlankCols = ({ board, row, col }) => {
+const openAdjacentBlankSquares = ({ board, row, col }) => {
   if (!board?.[row]?.[col]) return;
-  const colObj = board[row][col];
-  if (colObj.isOpen) return;
+  const squareObj = board[row][col];
+  if (squareObj.isOpen) return;
 
   const count = countMinesAround({ board, row, col });
-  colObj.isOpen = true;
-  colObj.count = count;
+  squareObj.isOpen = true;
+  squareObj.count = count;
 
   if (count > 0) return;
 
-  openAdjacentBlankCols({ board, row: row - 1, col });
-  openAdjacentBlankCols({ board, row, col: col - 1 });
-  openAdjacentBlankCols({ board, row, col: col + 1 });
-  openAdjacentBlankCols({ board, row: row + 1, col });
+  openAdjacentBlankSquares({ board, row: row - 1, col });
+  openAdjacentBlankSquares({ board, row, col: col - 1 });
+  openAdjacentBlankSquares({ board, row, col: col + 1 });
+  openAdjacentBlankSquares({ board, row: row + 1, col });
 };
 
 export const openAllMines = (board) =>
@@ -96,29 +96,29 @@ export const openAllMines = (board) =>
     })
   );
 
-export const openCol = ({ board, row, col }) => {
-  const colObj = board[row][col];
-  colObj.isOpen = true;
+export const openSquare = ({ board, row, col }) => {
+  const squareObj = board[row][col];
+  squareObj.isOpen = true;
 
-  if (colObj.isMine) {
+  if (squareObj.isMine) {
     return {
       boardUpdated: openAllMines(board),
       mineBoomed: true,
     };
   }
-  colObj.count = countMinesAround({ board, row, col });
+  squareObj.count = countMinesAround({ board, row, col });
 
-  if (colObj.count === 0) {
-    openAdjacentBlankCols({ board, row: row - 1, col });
-    openAdjacentBlankCols({ board, row, col: col - 1 });
-    openAdjacentBlankCols({ board, row, col: col + 1 });
-    openAdjacentBlankCols({ board, row: row + 1, col });
+  if (squareObj.count === 0) {
+    openAdjacentBlankSquares({ board, row: row - 1, col });
+    openAdjacentBlankSquares({ board, row, col: col - 1 });
+    openAdjacentBlankSquares({ board, row, col: col + 1 });
+    openAdjacentBlankSquares({ board, row: row + 1, col });
   }
 
   return { boardUpdated: board, mineBoomed: false };
 };
 
-export const flagCol = ({ board, row, col }) => {
+export const flagSquare = ({ board, row, col }) => {
   board[row][col].isFlag = !board[row][col].isFlag;
 
   return board;
