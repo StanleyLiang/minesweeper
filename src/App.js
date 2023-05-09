@@ -1,21 +1,17 @@
 import { useState } from "react";
 import classNames from "classnames";
 import Col from "./Col";
+import Controller from "./Controller";
 import { initBoard, placeMines, openCol, flagCol } from "./utils";
+import { GameStatus } from "./constants";
 import "./App.css";
 
 const ROWS = 9;
 const COLS = 9;
 const MINES = 10;
 
-const GameStatus = {
-  Initial: "initial",
-  Started: "started",
-  Failed: "failed",
-};
-
 function App() {
-  const [gameStatus, setGameStatus] = useState(GameStatus.initial);
+  const [gameStatus, setGameStatus] = useState(GameStatus.Initial);
   const [board, setBoard] = useState(initBoard(ROWS, COLS));
 
   const boardClass = classNames("board", gameStatus);
@@ -67,7 +63,7 @@ function App() {
           </div>
         ))}
       </div>
-      {gameStatus === GameStatus.Failed && <div>Game Over</div>}
+      <Controller gameStatus={gameStatus} />
     </div>
   );
 }

@@ -33,6 +33,7 @@ const Col = ({
       className={colClass}
       onClick={clickHandler}
       onContextMenu={contextMenuHandler}
+      data-count={count}
     >
       {display}
     </div>
