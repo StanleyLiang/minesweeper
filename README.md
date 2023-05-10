@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+# Live demo
+![截圖 2023-05-10 上午9 27 47](https://github.com/StanleyLiang/minesweeper/assets/106784615/90e00f51-b8b0-47de-97aa-7794b9bba84a)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+https://main--aquamarine-meerkat-deb7b6.netlify.app/
 
-## Available Scripts
+# Getting Started with minesweeper
 
-In the project directory, you can run:
+For Development, clone this repo and run the following commands to start:
+```bash
+npm install
+npm start
+```
 
-### `npm start`
+# Original requirement
+## Question 1: Minesweeper
+Implement the classic Windows game Minesweeper.
+The game has the following rules:
+1. Clicking a mine ends the game.
+2. Clicking a square with an adjacent mine clears that square and shows the number of mines touching it.
+3. Clicking a square with no adjacent mine clears that square and clicks all adjacent squares.
+4. The first click will never be a mine, it will clear the map and place numbers on the grid.
+5. The numbers reflect the number of mines touching a square.
+6. Right clicking on a square puts a flag on it. The flagged square can’t be opened by a click.
+7. If the number in a square is equal to the number of squares touching that square that are flagged, double clicking on the number opens up all remaining squares around the number. (Note: this won’t work on touch screen devices)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Your submission will be evaluated for:
+* Functionality: does it run and meet the basic rules.
+* Code quality: is your code readable, maintainable, and extendable.
+* Styling: CSS and minimal UI/UX design.
+* Additionally, you may further consider the following functionalities:
+* Game control: Start and Reset.
+* Game status: Timer and mine count.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# Design
+## UI
+* game board
+  * dimension: 9 x 9, which means there are 81 squares in the game board.
+  * width 400px
+  * RWD support 
+* sqaure: units to compose the game board
+  * isFlag: 🚩
+  * isOpen && isMine: 💣
+  * isOpen && count > 0: colorful count number
+  * blank if none of above are fulfilled.
+## react components
+* App
+  * data container 
+  * handle event callback from `Col` and `Controller`
+  * board calculating helpers are encapsulated into `utils`
+* Col
+  * based on the component props to render a single square
+* Controller
+  * display message, e.g "game over"
+  * buttons, e.g "Restart"
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## data structure of a square
+square: object
+```javascript
+{
+  isOpen: false, // revealed square
+  isMine: false, // square where a mine is placed
+  isFlag: false, // square flagged by player
+  count: 0, // mines existing in the adjacent squares
+}
+```
+boadrd: two dimenstion array with squares
+```javascript
+[
+  [{
+    isOpen: false, // revealed square
+    isMine: false, // square where a mine is placed
+    isFlag: false, // square flagged by player
+    count: 0, // mines existing in the adjacent squares
+  }, {
+    isOpen: false, // revealed square
+    isMine: false, // square where a mine is placed
+    isFlag: false, // square flagged by player
+    count: 0, // mines existing in the adjacent squares
+  }],
+  [{
+    isOpen: false, // revealed square
+    isMine: false, // square where a mine is placed
+    isFlag: false, // square flagged by player
+    count: 0, // mines existing in the adjacent squares
+  }, {
+    isOpen: false, // revealed square
+    isMine: false, // square where a mine is placed
+    isFlag: false, // square flagged by player
+    count: 0, // mines existing in the adjacent squares
+  }]
+]
+```
