@@ -63,7 +63,7 @@ Your submission will be evaluated for:
   - display message, e.g "game over"
   - buttons, e.g "Restart"
 
-## data structure of a square
+## data structure
 
 square: object
 
@@ -110,3 +110,27 @@ board: two dimension array with squares
   ],
 ];
 ```
+
+# process of thought
+I played minesweeper for the very first time from my 15 but I never practially develop a minesweeper game from scratch, cool. 
+
+I start from thinking the behavior of a 3 x 3 (9 squares) game board which is supposred to be the minimun scale of a minesweeper.
+
+By this 3 x 3 game board, the followings are determined:
+* how to generate and place mines
+  1. generate n random numbers between 0 ~ 8
+  2. transform those random numbers into indexes of a 3 x 3 two dimenstion array. For example, mine with number 5 will be placed in array[1][1]. Then mark these index by `isMine = true`
+* how to count the number of mines around the central square
+  1. check adjacent sqaures the central sqaure where `isMine` is true or not
+  2. here I take `[x][y]` as the index of the central square. And the adjacent indexes the central square are: `[x-1][y-1]`, `[x-1][y]`, `[x-1][y+1]`, `[x][y-1]`, `[x][y+1]`, `[x+1][y-1]`, `[x+1][y]` [x+1],[y+1]
+  3. so through checking these squares, I can get the mines count of the central square
+
+Then I expand the dimension into my dedicated one: 9 x 9. Then the most difficty problem comes to me: 'Clicking a square with no adjacent mine clears that square and clicks all adjacent squares.'
+
+Originally I guess I may need some cool algorithm from leetcode to conquer this functionaility. After I observed the minesweeper by google, luckly I don't think it's so difficult. The flow is as the following:
+1. As a the clicked and opened square is blank square, start to traverse other four squares: top `[x-1][y]`, left `[x][y-1]`, right `[x][y+1]`, bottom `[x+1][y]`.
+2. recursively traverse these squares, return until the traversing square is originally opend or count > 0
+
+Then it just working, AWESOME!!!
+
+Becuase the successful case is not specified in the requirement, so I didn't implement it yet.
