@@ -1,6 +1,6 @@
 import { useState } from "react";
 import classNames from "classnames";
-import Col from "./Col";
+import Square from "./Square";
 import Controller from "./Controller";
 import {
   initBoard,
@@ -43,9 +43,10 @@ function App() {
     setBoard(boardUpdated);
   };
 
-  const onColClick = gameStatus === GameStatus.Started ? onOpenSquare : onStart;
+  const onSquareClick =
+    gameStatus === GameStatus.Started ? onOpenSquare : onStart;
 
-  const onColFlag = ({ row, col }) => {
+  const onSquareFlag = ({ row, col }) => {
     const boardUpdated = flagSquare({ board, row, col });
     setBoard([...boardUpdated]);
   };
@@ -61,13 +62,13 @@ function App() {
         {board.map((row, rowIndex) => (
           <div className="row" key={rowIndex}>
             {row.map((col, colIndex) => (
-              <Col
+              <Square
                 key={`${rowIndex}-${colIndex}`}
                 row={rowIndex}
                 col={colIndex}
                 {...col}
-                onClick={onColClick}
-                onContextMenu={onColFlag}
+                onClick={onSquareClick}
+                onContextMenu={onSquareFlag}
                 onDoubleClick={onOpenSquareAround}
               />
             ))}
